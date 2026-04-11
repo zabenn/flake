@@ -6,13 +6,14 @@
 }:
 {
   services = {
+    displayManager.gdm = {
+      enable = true;
+      wayland = true;
+      autoSuspend = false;
+    };
+    desktopManager.gnome.enable = true;
     xserver = {
       enable = true;
-      displayManager.gdm = {
-        enable = true;
-        wayland = true;
-      };
-      desktopManager.gnome.enable = true;
       xkb = {
         layout = "us";
         variant = "";
@@ -24,7 +25,7 @@
     ../../dotfiles/monitors + "/${config.networking.hostName}.xml";
 
   environment.systemPackages = with pkgs.gnomeExtensions; [
-    paperwm-fork
+    paperwm
     transparent-top-bar-adjustable-transparency
     vertical-workspaces
     vscode-search-provider

@@ -1,10 +1,25 @@
 {
+  config,
   inputs,
   lib,
+  osConfig,
   pkgs,
   ...
 }:
 {
+  systemd.user.services.remove-gnome-app-folders = {
+    Unit = {
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.dconf}/bin/dconf write /org/gnome/desktop/app-folders/folder-children \"@as []\"";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
   gtk = {
     enable = true;
     theme = {
@@ -14,6 +29,9 @@
       gtk-application-prefer-dark-theme = true;
     };
   };
+
+  xdg.configFile."monitors.xml".source =
+    ../../dotfiles/monitors + "/${osConfig.networking.hostName}.xml";
 
   dconf = {
     enable = true;
@@ -59,27 +77,34 @@
       "org/gnome/desktop/search-providers" = {
         disabled = [ ];
         sort-order = [
-          "org.gnome.Calendar.desktop"
-          "org.gnome.Characters.desktop"
-          "org.gnome.Contacts.desktop"
+          "org.gnome.Weather.desktop"
+          "org.gnome.Epiphany.desktop"
+          "org.gnome.Calculator.desktop"
+          "org.gnome.seahorse.Application.desktop"
+          "org.gnome.clocks.desktop"
           "org.gnome.Nautilus.desktop"
           "org.gnome.Settings.desktop"
+          "org.gnome.Characters.desktop"
+          "org.gnome.Contacts.desktop"
+          "org.gnome.Calendar.desktop"
         ];
       };
       "org/gnome/desktop/wm/preferences" = {
         num-workspaces = 1;
       };
+      "org/gnome/gnome-screenshot" = {
+        auto-save-directory = "file://${config.home.homeDirectory}";
+      };
       "org/gnome/mutter" = {
         dynamic-workspaces = false;
         experimental-features = [
           "scale-monitor-framebuffer"
-          "xwayland-native-scaling"
         ];
       };
       "org/gnome/shell" = {
         disable-user-extensions = false;
         enabled-extensions = [
-          pkgs.gnomeExtensions.paperwm-fork.extensionUuid
+          pkgs.gnomeExtensions.paperwm.extensionUuid
           pkgs.gnomeExtensions.transparent-top-bar-adjustable-transparency.extensionUuid
           pkgs.gnomeExtensions.vertical-workspaces.extensionUuid
           pkgs.gnomeExtensions.vscode-search-provider.extensionUuid
@@ -92,7 +117,6 @@
         ];
         cycle-width-steps = [
           0.35
-          0.5
           0.65
         ];
         default-focus-mode = 0;
@@ -110,14 +134,16 @@
         window-gap = 30;
         winprops = [
           ''{"wm_class":"*","preferredWidth":"35%"}''
+          ''{"wm_class":"affinity.exe","preferredWidth":"65%"}''
           ''{"wm_class":"blender","preferredWidth":"65%"}''
           ''{"wm_class":"Code","preferredWidth":"65%"}''
           ''{"wm_class":"designer.exe","preferredWidth":"65%"}''
           ''{"wm_class":"discord","preferredWidth":"65%"}''
-          ''{"wm_class":"firefox","preferredWidth":"65%"}''
+          ''{"wm_class":"firefox","title":"/^Mozilla Firefox$/","preferredWidth":"65%"}''
           ''{"wm_class":"Godot","preferredWidth":"65%"}''
           ''{"wm_class":"Nxplayer.bin","preferredWidth":"65%"}''
           ''{"wm_class":"rviz2","preferredWidth":"65%"}''
+          ''{"wm_class":"steam","title":"/^Steam$/","preferredWidth":"65%"}''
         ];
       };
       "org/gnome/shell/extensions/vertical-workspaces" = {
@@ -127,14 +153,16 @@
         app-grid-page-width-scale = 70;
         click-empty-close = true;
         dash-position = 4;
-        highlighting-style = 0;
+        enable-page-shortcuts = false;
+        highlighting-style = 2;
+        notification-position = 1;
         overview-bg-blur-sigma = 0;
         overview-mode = 0;
         search-app-grid-mode = 0;
         search-bg-brightness = 60;
         search-fuzzy = true;
         search-include-settings = false;
-        search-width-scale = 70;
+        search-width-scale = 80;
         show-overview-background = 2;
         show-ws-preview-bg = false;
         startup-state = 2;
@@ -155,10 +183,6 @@
       noDisplay = true;
     };
     "org.gnome.Calculator" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Connections" = {
       name = "";
       noDisplay = true;
     };
