@@ -7,6 +7,9 @@
     GITHUB_PRIVATE_KEY = "${config.home.homeDirectory}/.ssh/samraise.pub";
     GITHUB_PUBLIC_KEY = "${config.home.homeDirectory}/.ssh/samraise.pub";
     GITHUB_CERTIFICATE = "${config.home.homeDirectory}/.ssh/github_certificate.pub";
+    REMOTE_SUPPORT_PRIVATE_KEY = "${config.home.homeDirectory}/.ssh/samraise.pub";
+    REMOTE_SUPPORT_PUBLIC_KEY = "${config.home.homeDirectory}/.ssh/samraise.pub";
+    REMOTE_SUPPORT_CERTIFICATE = "${config.home.homeDirectory}/.ssh/remote_support_certificate.pub";
     METALMAN_DIR = "${config.home.homeDirectory}/metalman2";
   };
 

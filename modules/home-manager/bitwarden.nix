@@ -12,10 +12,9 @@
 
   programs.ssh = {
     enable = true;
-    matchBlocks = {
-      "*" = {
-        identityFile = "${config.home.homeDirectory}/.ssh/zabenn.pub";
-      };
+    enableDefaultConfig = false;
+    matchBlocks."*" = {
+      identityFile = "${config.home.homeDirectory}/.ssh/zabenn.pub";
     };
   };
 }
