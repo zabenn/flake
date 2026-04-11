@@ -4,17 +4,18 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "sudo nixos-rebuild switch --flake .#$hostname",
+            "command": "sudo nixos-rebuild switch --show-trace --flake .#$hostname",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
             "presentation": {
-                "reveal": "always",
+                "reveal": "silent",
                 "panel": "dedicated",
-                "clear": true,
-                "close": true
-            },
+                "focus": true,
+                "echo": false,
+                "showReuseMessage": false,
+            }
         }
     ]
 }

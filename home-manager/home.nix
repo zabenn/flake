@@ -39,12 +39,13 @@
 
   programs.git = {
     enable = true;
-    userName = "Sam Cribbs";
-    userEmail = "samuel_cribbs@berkeley.edu";
     lfs.enable = true;
-    extraConfig = {
-      push = {
-        autoSetupRemote = true;
+    settings = {
+      init.defaultBranch = "main";
+      push.autoSetupRemote = true;
+      user = {
+        name = "Sam Cribbs";
+        email = "samuel_cribbs@berkeley.edu";
       };
     };
   };
@@ -53,14 +54,22 @@
     enable = true;
     profiles.default = {
       extensions = with pkgs.vscode-extensions; [
-        # eddiedover.gdscript-formatter-linter
+        anthropic.claude-code
+        charliermarsh.ruff
+        eddiedover.gdscript-formatter-linter
+        esbenp.prettier-vscode
         geequlim.godot-tools
+        github.vscode-pull-request-github
+        james-yu.latex-workshop
         jnoortheen.nix-ide
-        ms-azuretools.vscode-docker
+        ms-azuretools.vscode-containers
+        ms-python.isort
         ms-python.python
+        ms-python.vscode-pylance
         ms-vscode-remote.remote-containers
         ms-vscode-remote.remote-ssh
         piousdeer.adwaita-theme
+        tomoki1207.pdf
       ];
       userSettings = {
         "chat.editing.confirmEditRequestRemoval" = false;
@@ -78,11 +87,14 @@
         "godotTools.lsp.autoReconnect.attempts" = 3;
         "remote.autoForwardPortsSource" = "hybrid";
         "remote.SSH.configFile" = "${config.home.homeDirectory}/metalman2/.devops/ssh/config";
+        "remote.SSH.enableRemoteCommand" = true;
         "scm.defaultViewMode" = "tree";
         "window.autoDetectColorScheme" = true;
         "window.commandCenter" = true;
         "window.titleBarStyle" = "custom";
-        "workbench.iconTheme" = null;
+        "workbench.editor.enablePreviewFromQuickOpen" = true;
+        "workbench.editor.limit.enabled" = true;
+        "workbench.editor.limit.value" = 5;
         "workbench.preferredDarkColorTheme" = "Default Dark Modern";
         "workbench.preferredLightColorTheme" = "Default Light Modern";
         "workbench.productIconTheme" = "adwaita";
@@ -92,5 +104,5 @@
     };
   };
 
-  home.stateVersion = "23.05";
+  home.stateVersion = "25.11";
 }
