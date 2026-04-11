@@ -24,7 +24,6 @@
 
   environment.systemPackages = with pkgs; [
     awscli2
-    nomachine-client
     slack
     vault-bin
   ];

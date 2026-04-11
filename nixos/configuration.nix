@@ -8,13 +8,21 @@
 }:
 {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
     ../modules/nixos
+    inputs.home-manager.nixosModules.home-manager
+    inputs.nix-index-database.nixosModules.nix-index
   ];
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = false;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = false;
+    };
+  };
+
+  hardware.ckb-next = {
+    enable = true;
+    package = pkgs.ckb-next;
   };
 
   nixpkgs = {
@@ -46,22 +54,27 @@
       nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
     };
 
-  services.logind = {
-    lidSwitchExternalPower = "ignore";
-    lidSwitchDocked = "ignore";
+  programs.nix-ld.enable = true;
+
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
   };
 
   services.automatic-timezoned.enable = true;
 
-  services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
-
-  services.hardware.openrgb = {
+  services.geoclue2 = {
     enable = true;
-    package = pkgs.openrgb-with-all-plugins;
-    motherboard = "intel";
-    server = {
-      port = 6742;
-    };
+    geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+  };
+
+  services.printing.enable = true;
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
   };
 
   services.speechd = {
@@ -74,24 +87,25 @@
     ../dotfiles/steam/hypnospace_outlaw/speechd.conf;
 
   environment.systemPackages = with pkgs; [
-    affinity.designer
-    affinity.photo
+    affinity.v3
     blender
-    bitwarden
+    bitwarden-desktop
     discord
+    exfat
     firefox
+    flyctl
     git
     gnome-network-displays
-    godot
-    inter
     nixfmt-rfc-style
     nodejs
-    openrgb
     pnpm
     python3
     spotify
     steam
     tinty
+    tree
+    unstable.claude-code
+    unstable.godot
     uv
     vscode
   ];
@@ -103,8 +117,8 @@
       description = "Sam Cribbs";
       extraGroups = [
         "networkmanager"
-        "wheel"
         "users"
+        "wheel"
       ];
     };
   };
@@ -118,5 +132,5 @@
     };
   };
 
-  system.stateVersion = "23.05";
+  system.stateVersion = "25.11";
 }
