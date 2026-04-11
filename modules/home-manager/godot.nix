@@ -1,16 +1,8 @@
-{ pkgs, ... }:
-let
-  godotMinimalTheme = pkgs.fetchFromGitHub {
-    owner = "passivestar";
-    repo = "godot-minimal-theme";
-    rev = "2.3.3";
-    sha256 = "sha256-cdWeuM/VjhC0XyUr5vCfrgepbG9+QPIhZC7RoGQXcds=";
-  };
-in
+{ lib, ... }:
 {
-  home.file.".local/share/godot/themes/minimal_theme.tres".source =
-    "${godotMinimalTheme}/minimal_theme.tres";
-
-  xdg.configFile."godot/editor_settings-4.4.tres".source =
-    ../../dotfiles/godot/editor_settings-4.4.tres;
+  home.activation.godotEditorSettingsWritable = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    [ -f ~/.config/godot/editor_settings-4.6.tres ] && cp ~/.config/godot/editor_settings-4.6.tres ~/.config/godot/editor_settings-4.6.tres.backup
+    rm -f ~/.config/godot/editor_settings-4.6.tres
+    cp --no-preserve=mode ${../../dotfiles/godot/editor_settings-4.6.tres} ~/.config/godot/editor_settings-4.6.tres
+  '';
 }

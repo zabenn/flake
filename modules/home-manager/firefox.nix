@@ -1,20 +1,14 @@
 { config, pkgs, ... }:
-let
-  firefoxGnomeTheme = pkgs.fetchFromGitHub {
-    owner = "rafaelmardojai";
-    repo = "firefox-gnome-theme";
-    rev = "v142";
-    sha256 = "sha256-kyxuK5Fras7QYiJmUomqdq8NlgWV66hmNvxcJnGCpUE=";
-  };
-in
 {
   programs.firefox = {
     enable = true;
     profiles.default = {
       id = 0;
       name = "Default";
+      isDefault = true;
       settings = {
-        "browser.download.dir" = "${config.home.homeDirectory}";
+        "browser.download.dir" = config.home.homeDirectory;
+        "browser.download.folderList" = 2;
         "browser.download.useDownloadDir" = true;
         "browser.formfill.enable" = false;
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
@@ -32,14 +26,11 @@ in
         "pref.privacy.disable_button.view_passwords" = true;
         "signon.rememberSignons" = false;
         "svg.context-properties.content.enabled" = true;
-        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
       extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         bitwarden
         ublock-origin
       ];
-      userChrome = builtins.readFile (firefoxGnomeTheme + "/userChrome.css");
-      userContent = builtins.readFile (firefoxGnomeTheme + "/userContent.css");
     };
   };
 }
