@@ -1,12 +1,14 @@
 { config, pkgs, ... }:
 {
-  services.xserver.videoDrivers = [ "nvidia" ];
-
   hardware = {
     nvidia = {
       modesetting.enable = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
       open = true;
+      powerManagement = {
+        enable = true;
+        finegrained = false;
+      };
       prime = {
         intelBusId = "PCI:0:2:0";
         nvidiaBusId = "PCI:1:0:0";
@@ -26,4 +28,16 @@
       ];
     };
   };
+
+  systemd.services = {
+    nvidia-suspend.enable = true;
+    nvidia-resume.enable = true;
+    nvidia-hibernate.enable = true;
+  };
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  boot.kernelParams = [
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+  ];
 }
