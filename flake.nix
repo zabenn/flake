@@ -49,7 +49,7 @@
       homeModules = import ./modules/home-manager;
 
       nixosConfigurations = {
-        p14s = mkSystem "p14s" "raise";
+        p16s = mkSystem "p16s" "raise";
         xps = mkSystem "xps" "raise";
         zbox = mkSystem "zbox" "raise";
       };
