@@ -10,9 +10,33 @@
                 "isDefault": true
             },
             "presentation": {
-                "reveal": "silent",
+                "reveal": "always",
                 "panel": "dedicated",
                 "focus": true,
+                "echo": false,
+                "showReuseMessage": false,
+            }
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "nix-collect-garbage -d",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": false,
+                "echo": false,
+                "showReuseMessage": false,
+            }
+        },
+        {
+            "label": "Update",
+            "type": "shell",
+            "command": "nix flake update",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "focus": false,
                 "echo": false,
                 "showReuseMessage": false,
             }

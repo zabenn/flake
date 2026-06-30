@@ -10,14 +10,13 @@
   imports = [
     ../modules/nixos
     inputs.home-manager.nixosModules.home-manager
+    inputs.nix-flatpak.nixosModules.nix-flatpak
     inputs.nix-index-database.nixosModules.nix-index
   ];
 
-  boot = {
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = false;
-    };
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = false;
   };
 
   hardware.ckb-next = {
@@ -27,14 +26,18 @@
 
   nixpkgs = {
     overlays = [
+      inputs.affinity-nix.overlays.default
+      inputs.nix-vscode-extensions.overlays.default
       inputs.nur.overlays.default
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-      outputs.overlays.affinity-packages
     ];
     config = {
       allowUnfree = true;
+      permittedInsecurePackages = [
+        "electron-39.8.10"
+      ];
     };
   };
 
@@ -56,56 +59,64 @@
 
   programs.nix-ld.enable = true;
 
-  services.logind.settings.Login = {
-    HandleLidSwitch = "suspend";
-    HandleLidSwitchDocked = "ignore";
-    HandleLidSwitchExternalPower = "ignore";
+  networking.networkmanager.enable = true;
+
+  zramSwap.enable = true;
+
+  services = {
+    automatic-timezoned.enable = true;
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
+    flatpak = {
+      enable = true;
+      packages = [
+        "org.vinegarhq.Sober"
+      ];
+    };
+    geoclue2 = {
+      enable = true;
+      geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+    };
+    howdy = {
+      enable = true;
+      control = "sufficient";
+    };
+    linux-enable-ir-emitter.enable = true;
+    logind.settings.Login = {
+      HandleLidSwitch = "suspend";
+      HandleLidSwitchDocked = "ignore";
+      HandleLidSwitchExternalPower = "ignore";
+    };
+    printing.enable = true;
   };
-
-  services.automatic-timezoned.enable = true;
-
-  services.geoclue2 = {
-    enable = true;
-    geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
-  };
-
-  services.printing.enable = true;
-
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    openFirewall = true;
-  };
-
-  services.speechd = {
-    enable = true;
-  };
-
-  environment.etc."speech-dispatcherc/clients/hypnos.conf".source =
-    ../dotfiles/steam/hypnospace_outlaw/hypnos.conf;
-  environment.etc."speech-dispatcher/speechd.conf".source =
-    ../dotfiles/steam/hypnospace_outlaw/speechd.conf;
 
   environment.systemPackages = with pkgs; [
-    affinity.v3
-    blender
+    affinity-v3
     bitwarden-desktop
+    blender
+    unstable.godot_4_7
+    gtk3
     discord
     exfat
     firefox
     flyctl
+    gh
     git
     gnome-network-displays
-    nixfmt-rfc-style
-    nodejs
+    howdy
+    inkscape
+    nixd
+    nixfmt
+    nodejs_24
     pnpm
     python3
     spotify
     steam
     tinty
     tree
-    unstable.claude-code
-    unstable.godot
     uv
     vscode
   ];
@@ -132,5 +143,5 @@
     };
   };
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 }

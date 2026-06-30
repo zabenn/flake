@@ -1,7 +1,6 @@
 {
   inputs,
   outputs,
-  lib,
   config,
   pkgs,
   ...
@@ -18,12 +17,12 @@
 
   nixpkgs = {
     overlays = [
+      inputs.affinity-nix.overlays.default
+      inputs.nix-vscode-extensions.overlays.default
       inputs.nur.overlays.default
-      inputs.vscode-extensions.overlays.default
       outputs.overlays.additions
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
-      outputs.overlays.affinity-packages
     ];
     config = {
       allowUnfree = true;
@@ -35,6 +34,13 @@
   programs.nix-index = {
     enable = true;
     enableBashIntegration = true;
+  };
+
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper = {
+      enable = true;
+    };
   };
 
   programs.git = {
@@ -54,11 +60,12 @@
     enable = true;
     profiles.default = {
       extensions = with pkgs.vscode-extensions; [
-        anthropic.claude-code
         charliermarsh.ruff
         eddiedover.gdscript-formatter-linter
         esbenp.prettier-vscode
         geequlim.godot-tools
+        github.copilot
+        github.copilot-chat
         github.vscode-pull-request-github
         james-yu.latex-workshop
         jnoortheen.nix-ide
@@ -73,6 +80,7 @@
       ];
       userSettings = {
         "chat.editing.confirmEditRequestRemoval" = false;
+        "chat.mcp.gallery.enabled" = true;
         "editor.formatOnSave" = true;
         "editor.minimap.enabled" = false;
         "editor.renderLineHighlight" = "none";
@@ -94,9 +102,9 @@
         "window.titleBarStyle" = "custom";
         "workbench.editor.enablePreviewFromQuickOpen" = true;
         "workbench.editor.limit.enabled" = true;
-        "workbench.editor.limit.value" = 5;
-        "workbench.preferredDarkColorTheme" = "Default Dark Modern";
-        "workbench.preferredLightColorTheme" = "Default Light Modern";
+        "workbench.editor.limit.value" = 8;
+        "workbench.preferredDarkColorTheme" = "Dark Modern";
+        "workbench.preferredLightColorTheme" = "Light Modern";
         "workbench.productIconTheme" = "adwaita";
         "workbench.tree.indent" = 12;
         "workbench.welcomePage.walkthroughs.openOnInstall" = false;
@@ -104,5 +112,5 @@
     };
   };
 
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 }

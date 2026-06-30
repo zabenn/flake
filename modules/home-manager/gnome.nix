@@ -7,6 +7,13 @@
   ...
 }:
 {
+  home.activation.fixPaperwmMetadata = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    mkdir -p "$HOME/.config/paperwm"
+    if [ -f "$HOME/.config/paperwm/metadata.json" ]; then
+      chmod u+w "$HOME/.config/paperwm/metadata.json"
+    fi
+  '';
+
   systemd.user.services.remove-gnome-app-folders = {
     Unit = {
       After = [ "graphical-session.target" ];
@@ -92,6 +99,10 @@
       "org/gnome/desktop/wm/preferences" = {
         num-workspaces = 1;
       };
+      "org/gnome/settings-daemon/plugins/power" = {
+        sleep-inactive-ac-type = "nothing";
+        sleep-inactive-battery-type = "nothing";
+      };
       "org/gnome/gnome-screenshot" = {
         auto-save-directory = "file://${config.home.homeDirectory}";
       };
@@ -136,14 +147,16 @@
           ''{"wm_class":"*","preferredWidth":"35%"}''
           ''{"wm_class":"affinity.exe","preferredWidth":"65%"}''
           ''{"wm_class":"blender","preferredWidth":"65%"}''
-          ''{"wm_class":"Code","preferredWidth":"65%"}''
+          ''{"wm_class":"code","preferredWidth":"65%"}''
           ''{"wm_class":"designer.exe","preferredWidth":"65%"}''
           ''{"wm_class":"discord","preferredWidth":"65%"}''
-          ''{"wm_class":"firefox","title":"/^Mozilla Firefox$/","preferredWidth":"65%"}''
+          ''{"wm_class":"firefox","title":"Mozilla Firefox","preferredWidth":"65%"}''
+          ''{"wm_class":"firefox","title":"Extension","preferredWidth":"35%"}''
+          ''{"wm_class":"firefox","title":"Picture-in-Picture","scratch_layer":true,"focus":false}''
           ''{"wm_class":"Godot","preferredWidth":"65%"}''
           ''{"wm_class":"Nxplayer.bin","preferredWidth":"65%"}''
           ''{"wm_class":"rviz2","preferredWidth":"65%"}''
-          ''{"wm_class":"steam","title":"/^Steam$/","preferredWidth":"65%"}''
+          ''{"wm_class":"steam","title":"Steam","preferredWidth":"65%"}''
         ];
       };
       "org/gnome/shell/extensions/vertical-workspaces" = {
@@ -174,11 +187,23 @@
   };
 
   xdg.desktopEntries = {
+    "gnome-printers-panel" = {
+      name = "";
+      noDisplay = true;
+    };
+    "howdy" = {
+      name = "";
+      noDisplay = true;
+    };
     "nixos-manual" = {
       name = "";
       noDisplay = true;
     };
     "nvidia-settings" = {
+      name = "";
+      noDisplay = true;
+    };
+    "org.gnome.Contacts" = {
       name = "";
       noDisplay = true;
     };
@@ -226,6 +251,10 @@
       name = "";
       noDisplay = true;
     };
+    "org.gnome.SimpleScan" = {
+      name = "";
+      noDisplay = true;
+    };
     "org.gnome.TextEditor" = {
       name = "";
       noDisplay = true;
@@ -242,15 +271,15 @@
       name = "";
       noDisplay = true;
     };
-    "simple-scan" = {
+    "org.gnome.Yelp" = {
+      name = "";
+      noDisplay = true;
+    };
+    "system-config-printer" = {
       name = "";
       noDisplay = true;
     };
     "xterm" = {
-      name = "";
-      noDisplay = true;
-    };
-    "yelp" = {
       name = "";
       noDisplay = true;
     };

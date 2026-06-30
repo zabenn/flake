@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 {
   services.ssh-agent.enable = false;
 
@@ -13,8 +13,8 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks."*" = {
-      identityFile = "${config.home.homeDirectory}/.ssh/zabenn.pub";
+    settings."*" = {
+      IdentityFile = "${config.home.homeDirectory}/.ssh/zabenn.pub";
     };
   };
 }
