@@ -5,7 +5,7 @@
       owner = "hlorus";
       repo = "CAD_Sketcher";
       rev = "main";
-      sha256 = "4RbFwr8Bjqss2twjLMHFrnFdLved4Znve8E1N2SlsA0=";
+      sha256 = "sha256-RBTJ48tFsHw+ca7trk3rYv5xWN/Ctlvn8kQ+r7XZOq8=";
     };
   xdg.configFile."blender/${pkgs.lib.versions.majorMinor pkgs.blender.version}/extensions/user_default/gamerigtools".source =
     pkgs.fetchFromGitHub {

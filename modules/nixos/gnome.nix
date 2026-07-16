@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }:
@@ -16,11 +17,37 @@
         layout = "us";
         variant = "";
       };
+      excludePackages = [ pkgs.xterm ];
     };
+    system-config-printer.enable = lib.mkForce false;
   };
+
+  documentation.nixos.enable = false;
 
   environment.etc."gdm/monitors.xml".source =
     ../../dotfiles/monitors + "/${config.networking.hostName}.xml";
+
+  environment.gnome.excludePackages = with pkgs; [
+    decibels
+    epiphany
+    gnome-calculator
+    gnome-clocks
+    gnome-connections
+    gnome-contacts
+    gnome-logs
+    gnome-maps
+    gnome-software
+    gnome-text-editor
+    gnome-tour
+    gnome-weather
+    loupe
+    papers
+    # seahorse
+    showtime
+    simple-scan
+    snapshot
+    yelp
+  ];
 
   environment.systemPackages = with pkgs.gnomeExtensions; [
     paperwm

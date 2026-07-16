@@ -37,8 +37,10 @@
     };
   };
 
-  xdg.configFile."monitors.xml".source =
-    ../../dotfiles/monitors + "/${osConfig.networking.hostName}.xml";
+  xdg.configFile."monitors.xml" = {
+    source = ../../dotfiles/monitors + "/${osConfig.networking.hostName}.xml";
+    force = true;
+  };
 
   dconf = {
     enable = true;
@@ -145,17 +147,13 @@
         window-gap = 30;
         winprops = [
           ''{"wm_class":"*","preferredWidth":"35%"}''
-          ''{"wm_class":"affinity.exe","preferredWidth":"65%"}''
           ''{"wm_class":"blender","preferredWidth":"65%"}''
           ''{"wm_class":"code","preferredWidth":"65%"}''
-          ''{"wm_class":"designer.exe","preferredWidth":"65%"}''
           ''{"wm_class":"discord","preferredWidth":"65%"}''
           ''{"wm_class":"firefox","title":"Mozilla Firefox","preferredWidth":"65%"}''
           ''{"wm_class":"firefox","title":"Extension","preferredWidth":"35%"}''
           ''{"wm_class":"firefox","title":"Picture-in-Picture","scratch_layer":true,"focus":false}''
           ''{"wm_class":"Godot","preferredWidth":"65%"}''
-          ''{"wm_class":"Nxplayer.bin","preferredWidth":"65%"}''
-          ''{"wm_class":"rviz2","preferredWidth":"65%"}''
           ''{"wm_class":"steam","title":"Steam","preferredWidth":"65%"}''
         ];
       };
@@ -186,102 +184,14 @@
     };
   };
 
-  xdg.desktopEntries = {
-    "gnome-printers-panel" = {
-      name = "";
-      noDisplay = true;
-    };
-    "howdy" = {
-      name = "";
-      noDisplay = true;
-    };
-    "nixos-manual" = {
-      name = "";
-      noDisplay = true;
-    };
-    "nvidia-settings" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Contacts" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Calculator" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.clocks" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Decibels" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Epiphany" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Evince" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Geary" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Logs" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Loupe" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Maps" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.seahorse.Application" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Snapshot" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.SimpleScan" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.TextEditor" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Totem" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Tour" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Weather" = {
-      name = "";
-      noDisplay = true;
-    };
-    "org.gnome.Yelp" = {
-      name = "";
-      noDisplay = true;
-    };
-    "system-config-printer" = {
-      name = "";
-      noDisplay = true;
-    };
-    "xterm" = {
-      name = "";
-      noDisplay = true;
-    };
-  };
+  # xdg.desktopEntries = {
+  #   "gnome-printers-panel" = {
+  #     name = "";
+  #     noDisplay = true;
+  #   };
+  #   "org.gnome.Geary" = {
+  #     name = "";
+  #     noDisplay = true;
+  #   };
+  # };
 }
