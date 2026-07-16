@@ -9,12 +9,20 @@
       ];
     });
     vscode-extensions = prev.lib.recursiveUpdate prev.vscode-extensions {
-      eddiedover."gdscript-formatter-linter" = prev.vscode-utils.buildVscodeMarketplaceExtension {
+      eddiedover.gdscript-formatter-linter = prev.vscode-utils.buildVscodeMarketplaceExtension {
         mktplcRef = {
           publisher = "EddieDover";
           name = "gdscript-formatter-linter";
           version = "1.4.5";
           sha256 = "u1qv86ySMCy/DVDb2rYk6Pu6K+eAor+gYoJ1HGK4nic=";
+        };
+      };
+      leetcode.vscode-leetcode = prev.vscode-utils.buildVscodeMarketplaceExtension {
+        mktplcRef = {
+          publisher = "LeetCode";
+          name = "vscode-leetcode";
+          version = "0.18.4";
+          sha256 = "sha256-iiGK+XmTf9ROaSIksd71AHEJtatipebxmXI4v5r9nP8=";
         };
       };
     };
