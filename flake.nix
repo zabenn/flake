@@ -8,10 +8,6 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    affinity-nix = {
-      url = "path:/home/sam/affinity-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=latest";
     };
@@ -21,6 +17,10 @@
     };
     nix-vscode-extensions = {
       url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nur = {
@@ -34,7 +34,6 @@
       self,
       nixpkgs,
       home-manager,
-      affinity-nix,
       nix-flatpak,
       nix-index-database,
       nix-vscode-extensions,
@@ -43,17 +42,6 @@
     }:
     let
       inherit (self) outputs;
-      mkSystem =
-        hostname: config:
-        nixpkgs.lib.nixosSystem {
-          specialArgs = { inherit inputs outputs; };
-          system = "x86_64-linux";
-          modules = [
-            { networking.hostName = hostname; }
-            ./hardware/${hostname}.nix
-            ./nixos/${config}.nix
-          ];
-        };
     in
     {
       overlays = import ./overlays { inherit inputs; };
@@ -61,9 +49,11 @@
       homeModules = import ./modules/home-manager;
 
       nixosConfigurations = {
-        p16s = mkSystem "p16s" "raise";
-        xps = mkSystem "xps" "raise";
-        zbox = mkSystem "zbox" "raise";
+        fw16 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs outputs; };
+          system = "x86_64-linux";
+          modules = [ ./nixos/fw16.nix ];
+        };
       };
     };
 }

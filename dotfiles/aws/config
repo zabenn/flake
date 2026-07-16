@@ -1,6 +1,0 @@
-[profile raise]
-sso_account_id = 009175090414
-sso_role_name = ReadOnlyAccess
-sso_start_url = https://d-9067811726.awsapps.com/start
-sso_region = us-east-1
-sso_registration_scopes = sso:account:access

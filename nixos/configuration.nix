@@ -19,14 +19,8 @@
     efi.canTouchEfiVariables = false;
   };
 
-  hardware.ckb-next = {
-    enable = true;
-    package = pkgs.ckb-next;
-  };
-
   nixpkgs = {
     overlays = [
-      inputs.affinity-nix.overlays.default
       inputs.nix-vscode-extensions.overlays.default
       inputs.nur.overlays.default
       outputs.overlays.additions
@@ -70,21 +64,7 @@
       nssmdns4 = true;
       openFirewall = true;
     };
-    flatpak = {
-      enable = true;
-      packages = [
-        "org.vinegarhq.Sober"
-      ];
-    };
-    geoclue2 = {
-      enable = true;
-      geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
-    };
-    howdy = {
-      enable = true;
-      control = "sufficient";
-    };
-    linux-enable-ir-emitter.enable = true;
+    fprintd.enable = true;
     logind.settings.Login = {
       HandleLidSwitch = "suspend";
       HandleLidSwitchDocked = "ignore";
@@ -94,31 +74,29 @@
   };
 
   environment.systemPackages = with pkgs; [
-    affinity-v3
     bitwarden-desktop
     blender
-    unstable.godot_4_7
+    unstable.godot
     gtk3
     discord
     exfat
     firefox
     flyctl
-    gh
     git
     gnome-network-displays
-    howdy
     inkscape
     nixd
     nixfmt
+    nixfmt-tree
     nodejs_24
     pnpm
     python3
     spotify
     steam
-    tinty
+    texliveMedium
     tree
     uv
-    vscode
+    unstable.vscode
   ];
 
   users.users = {
