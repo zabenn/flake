@@ -16,7 +16,7 @@
     enableAudioWavelength = true;
     enableCalendarEvents = true;
   };
-  home.packages = [ pkgs.yamis-icon-theme ];
+  # home.packages = [ pkgs.yamis-icon-theme ];
 
   gtk = {
     enable = true;
