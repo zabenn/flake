@@ -24,10 +24,10 @@
       name = "adw-gtk3";
       package = pkgs.adw-gtk3;
     };
-    iconTheme = {
-      name = "yet-another-monochrome-icon-set";
-      package = pkgs.yamis-icon-theme;
-    };
+    #iconTheme = {
+      #name = "yet-another-monochrome-icon-set";
+      #package = pkgs.yamis-icon-theme;
+    #};
   };
 
   qt = {
