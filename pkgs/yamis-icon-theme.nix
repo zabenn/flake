@@ -9,7 +9,7 @@ stdenvNoCC.mkDerivation {
 
   src = fetchzip {
     url = "https://bitbucket.org/dirn-typo/yet-another-monochrome-icon-set/get/main.tar.gz";
-    sha256 = "sha256-lnN+7JIlnn6Gjyf5wKbPj/jkF405oG7GT6Bd3veJLdg=";
+    sha256 = "sha256-+RJLbQcDjaIPTgSvvfgHPOz/pvv1hbf3a82HREHrRc4=";
     stripRoot = true;
   };
 
