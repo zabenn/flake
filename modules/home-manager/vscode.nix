@@ -46,6 +46,9 @@
         "remote.SSH.enableRemoteCommand" = true;
         "scm.defaultViewMode" = "tree";
         "security.workspace.trust.untrustedFiles" = "open";
+        "task.problemMatchers.neverPrompt" = {
+          "shell" = true;
+        };
         "window.autoDetectColorScheme" = true;
         "window.commandCenter" = true;
         "window.titleBarStyle" = "custom";

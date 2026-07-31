@@ -29,9 +29,6 @@
     ];
     config = {
       allowUnfree = true;
-      permittedInsecurePackages = [
-        "electron-39.8.10"
-      ];
     };
   };
 
@@ -74,22 +71,24 @@
   };
 
   environment.systemPackages = with pkgs; [
-    bitwarden-desktop
+    unstable.bitwarden-desktop
     blender
     unstable.godot
+    ghostty
     gtk3
     discord
     exfat
     firefox
     flyctl
     git
-    gnome-network-displays
     inkscape
+    nautilus
     nixd
     nixfmt
     nixfmt-tree
     nodejs_24
     pnpm
+    poppler-utils
     python3
     spotify
     steam

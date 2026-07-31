@@ -8,6 +8,14 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mango = {
+      url = "github:mangowm/mango";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak/?ref=latest";
     };
@@ -23,6 +31,10 @@
       url = "github:NixOS/nixos-hardware/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    niri = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,16 +42,7 @@
   };
 
   outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      home-manager,
-      nix-flatpak,
-      nix-index-database,
-      nix-vscode-extensions,
-      nur,
-      ...
-    }:
+    inputs@{ self, ... }:
     let
       inherit (self) outputs;
     in
@@ -49,7 +52,7 @@
       homeModules = import ./modules/home-manager;
 
       nixosConfigurations = {
-        fw16 = nixpkgs.lib.nixosSystem {
+        fw16 = inputs.nixpkgs.lib.nixosSystem {
           specialArgs = { inherit inputs outputs; };
           system = "x86_64-linux";
           modules = [ ./nixos/fw16.nix ];

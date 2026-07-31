@@ -1,8 +1,8 @@
 {
   imports = [
     ./ckb-next.nix
+    ./dms.nix
     ./flatpak.nix
-    ./gnome.nix
     ./gpu.nix
   ];
 }
