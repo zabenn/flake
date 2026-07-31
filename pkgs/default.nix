@@ -1,3 +1,3 @@
 pkgs: {
-  yamis-icon-theme = pkgs.callPackage ./yamis-icon-theme.nix { };
+  # yamis-icon-theme = pkgs.callPackage ./yamis-icon-theme.nix { };
 }
