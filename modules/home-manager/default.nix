@@ -2,7 +2,7 @@
   imports = [
     ./bash.nix
     ./bitwarden.nix
-    ./blender.nix
+    # ./blender.nix
     ./dms.nix
     ./firefox.nix
     ./ghostty.nix
